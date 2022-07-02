@@ -19,6 +19,7 @@ function CoinsTable() {
 
     
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     const fetchCoinsList = async()=>{
         setloading(true);
         const {data}= await axios.get(CoinList(currency));
@@ -28,7 +29,7 @@ function CoinsTable() {
 
     useEffect(()=>{
         fetchCoinsList();
-    },[currency]);
+    },[currency, fetchCoinsList]);
 
     const darkTheme=createTheme({
         palette:{

@@ -13,6 +13,7 @@ const CoinPage = () => {
     const [coin, setcoin] = useState();
     const{currency, symbol}= CryptoState();
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     const fetchCoins = async()=>{
         const {data}= await axios.get(SingleCoin(coinId));
         setcoin(data);
@@ -21,7 +22,7 @@ const CoinPage = () => {
     console.log(coin);
     useEffect(()=>{
         fetchCoins();
-    },[])
+    },[fetchCoins])
 
     const useStyles= makeStyles((theme)=>({
         container:{

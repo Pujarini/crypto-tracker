@@ -11,20 +11,19 @@ const CoinInfo = ({coin}) => {
     const [historicData, sethistoricData] = useState();
     const [days, setdays] = useState(1);
     const [loading, setloading] = useState(false);
-    const [flag,setflag] = useState(false);
     const{currency}= CryptoState();
 
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     const fetchHistoricData = async()=>{
         const {data}= await axios.get(HistoricalChart(coin.id,days,currency))
         setloading(true);
-        setflag(true);
         sethistoricData(data.prices);
     }
 
     useEffect(()=>{
         fetchHistoricData();
-    },[currency,days]);
+    },[currency, days, fetchHistoricData]);
 
     const darkTheme = createTheme({
         palette: {
@@ -52,12 +51,12 @@ const CoinInfo = ({coin}) => {
             }
         }
     }));
-    console.log("historicData", !historicData | flag===false );
+    console.log("historicData", !historicData | loading === false );
     const classes = useStyles();
     return (
         <ThemeProvider theme={darkTheme}>
            <div className={classes.container}>
-               {!historicData | flag===false  ? <CircularProgress style={{color:"gold"}} thickness={1} size="250"/>:<>
+               {!historicData | loading === false  ? <CircularProgress style={{color:"gold"}} thickness={1} size="250"/>:<>
               <Line data={{
                    labels: historicData.map((coin)=>{
                        let date= new Date(coin[0]);
@@ -79,7 +78,7 @@ const CoinInfo = ({coin}) => {
 
                    {chartDays.map(day=>{
                        return(
-                        <SelectButton key={day.value} style={{display:"flex", flexDirection:"column",marginTop:20,justifyContent:"space-around",width:"25%"}} onClick={()=>{setdays(day.value); setloading(false); setflag(false)}} selected={day.value === days}>{day.label}</SelectButton>
+                        <SelectButton key={day.value} style={{display:"flex", flexDirection:"column",marginTop:20,justifyContent:"space-around",width:"25%"}} onClick={()=>{setdays(day.value); setloading(false);}} selected={day.value === days}>{day.label}</SelectButton>
                        )
                       
                    })}
