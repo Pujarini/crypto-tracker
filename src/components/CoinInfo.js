@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import {HistoricalChart} from '../config/api'
@@ -23,7 +24,7 @@ const CoinInfo = ({coin}) => {
 
     useEffect(()=>{
         fetchHistoricData();
-    },[currency, days, fetchHistoricData]);
+    },[currency, days]);
 
     const darkTheme = createTheme({
         palette: {
